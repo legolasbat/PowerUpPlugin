@@ -1,0 +1,3 @@
+D:\UE4\CPPacman\Plugins\PowerUpsPlugin\Intermediate\Build\Win64\UE4Editor\Development\PowerUpsPlugin\Definitions.PowerUpsPlugin.h
+D:\UE4\CPPacman\Plugins\PowerUpsPlugin\Source\PowerUpsPlugin\Public\PowerUpEffect.h
+D:\UE4\CPPacman\Plugins\PowerUpsPlugin\Intermediate\Build\Win64\UE4Editor\Inc\PowerUpsPlugin\PowerUpEffect.generated.h
