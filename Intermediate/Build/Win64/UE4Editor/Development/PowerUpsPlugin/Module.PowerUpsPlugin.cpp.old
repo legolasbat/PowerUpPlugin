@@ -2,4 +2,3 @@
 #include "D:/UE4/CPPacman/Plugins/PowerUpsPlugin/Source/PowerUpsPlugin/Private/PowerUpComponent.cpp"
 #include "D:/UE4/CPPacman/Plugins/PowerUpsPlugin/Source/PowerUpsPlugin/Private/PowerUpEffect.cpp"
 #include "D:/UE4/CPPacman/Plugins/PowerUpsPlugin/Source/PowerUpsPlugin/Private/PowerUpsPlugin.cpp"
-#include "D:/UE4/CPPacman/Plugins/PowerUpsPlugin/Source/PowerUpsPlugin/Private/PowerUpUser.cpp"
