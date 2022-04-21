@@ -89,6 +89,18 @@ void UPowerUpUser::AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps)
 	}
 }
 
+void UPowerUpUser::RemoveAllPowerUps()
+{
+	UPowerUpEffect* PowerUpEffect;
+
+	while(PuStack.Num() != 0)
+	{
+		PowerUpEffect = PuStack.Top();
+		PuStack.Pop();
+		RemovePowerUp(PowerUpEffect);
+	}
+}
+
 void UPowerUpUser::ApplyPowerUps(){
 	TArray<UPowerUpEffect*> TempStack;
 

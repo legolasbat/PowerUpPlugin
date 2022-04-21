@@ -29,6 +29,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps);
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveAllPowerUps();
+	
 private:
 	void CheckDurations(float DeltaTime);
 	bool AddProperty(UPowerUpEffect* PowerUpToAdd);
