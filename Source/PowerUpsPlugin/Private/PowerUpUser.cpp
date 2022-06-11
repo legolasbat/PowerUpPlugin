@@ -84,7 +84,8 @@ void UPowerUpUser::AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps)
 		{
 			if(NewPowerUp->GetDuration() != 0)
 				PuStack.Push(NewPowerUp);
-			
+
+			NewPowerUp->OnActivate(GetOwner());
 		}
 	}
 }
@@ -97,6 +98,7 @@ void UPowerUpUser::RemoveAllPowerUps()
 	{
 		PowerUpEffect = PuStack.Top();
 		PuStack.Pop();
+		PowerUpEffect->Duration = 0.0f;
 		RemovePowerUp(PowerUpEffect);
 	}
 }
@@ -175,7 +177,7 @@ void UPowerUpUser::RemovePowerUp(UPowerUpEffect* PowerUpToRemove)
 	else if (IsPropertyInt(PropertyVariable))
 	{
 		FNumericProperty* NumericPropertyVariable = CastField<FNumericProperty>(PropertyVariable);
-		int64 Value = NumericPropertyVariable->GetSignedIntPropertyValue(this);
+		int64 Value = NumericPropertyVariable->GetSignedIntPropertyValue(Data);
 		
 		if(PowerUpToRemove->GetOperation() == EOperation::Sum)
 		{
@@ -185,7 +187,12 @@ void UPowerUpUser::RemovePowerUp(UPowerUpEffect* PowerUpToRemove)
 			Value /= PowerUpToRemove->GetModification();
 		}
 		
-		NumericPropertyVariable->SetIntPropertyValue(this, Value);
+		NumericPropertyVariable->SetIntPropertyValue(Data, Value);
+	}
+
+	if(PowerUpToRemove->GetDuration() <= 0.0f)
+	{
+		PowerUpToRemove->OnDeactivate(GetOwner());
 	}
 }
 
@@ -212,10 +219,10 @@ bool UPowerUpUser::AddProperty(UPowerUpEffect* PowerUpToAdd)
 		NumericPropertyVariable->SetFloatingPointPropertyValue(Data, Value);
 		return true;
 	}
-	else if (IsPropertyInt(PropertyVariable))
+	if (IsPropertyInt(PropertyVariable))
 	{
 		FNumericProperty* NumericPropertyVariable = CastField<FNumericProperty>(PropertyVariable);
-		int64 Value = NumericPropertyVariable->GetSignedIntPropertyValue(this);
+		int64 Value = NumericPropertyVariable->GetSignedIntPropertyValue(Data);
 		
 		if(PowerUpToAdd->GetOperation() == EOperation::Sum)
 		{
@@ -225,7 +232,7 @@ bool UPowerUpUser::AddProperty(UPowerUpEffect* PowerUpToAdd)
 			Value *= PowerUpToAdd->GetModification();
 		}
 		
-		NumericPropertyVariable->SetIntPropertyValue(this, Value);
+		NumericPropertyVariable->SetIntPropertyValue(Data, Value);
 		return true;
 	}
 	return false;

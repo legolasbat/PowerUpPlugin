@@ -25,12 +25,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
-	UFUNCTION(BlueprintCallable)
-		void GetPowerUp();
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+		TArray<TSubclassOf<UPowerUpEffect>> GetPowerUps();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
 		void ActivatePowerUp(UPowerUpUser* PowerUpUser);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PowerUps")
 	TArray<TSubclassOf<UPowerUpEffect>> effects;
 };

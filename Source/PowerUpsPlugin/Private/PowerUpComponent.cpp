@@ -32,9 +32,9 @@ void UPowerUpComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	// ...
 }
 
-void UPowerUpComponent::GetPowerUp()
+TArray<TSubclassOf<UPowerUpEffect>> UPowerUpComponent::GetPowerUps()
 {
-	
+	return effects;
 }
 
 void UPowerUpComponent::ActivatePowerUp(UPowerUpUser* PowerUpUser)

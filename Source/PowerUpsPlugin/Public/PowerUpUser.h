@@ -26,10 +26,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
 	void AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
 	void RemoveAllPowerUps();
 	
 private:

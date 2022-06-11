@@ -19,21 +19,27 @@ class POWERUPSPLUGIN_API UPowerUpEffect : public UObject
 	GENERATED_BODY()
 
 public:
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActivate(AActor* AffectedActor);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeactivate(AActor* AffectedActor);
+	
 	// Parameters
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Parameters")
 	FString Name;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Parameters")
 	FName Variable;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Parameters")
 	float Modification;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Parameters")
 	float Duration;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Parameters")
 	EOperation Operation;
 
 	FString GetName() const;
