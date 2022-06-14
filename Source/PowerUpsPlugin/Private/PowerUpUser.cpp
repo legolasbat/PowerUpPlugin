@@ -198,11 +198,34 @@ void UPowerUpUser::RemovePowerUp(UPowerUpEffect* PowerUpToRemove)
 
 bool UPowerUpUser::AddProperty(UPowerUpEffect* PowerUpToAdd)
 {
-	FProperty* PropertyVariable = GetOwner()->GetClass()->FindPropertyByName(PowerUpToAdd->GetVariable());
+	FName Variable = PowerUpToAdd->GetVariable();
+	FString VarString = Variable.ToString();
+
+	FString MainVar;
+	FString ChildVar;
+	
+	if(!VarString.Split(".", &MainVar, &ChildVar))
+	{
+		MainVar = VarString;
+	}
+	
+	FProperty* PropertyVariable = GetOwner()->GetClass()->FindPropertyByName(FName(MainVar));
 	if(PropertyVariable == nullptr)
 		return false;
 
 	void* Data = PropertyVariable->ContainerPtrToValuePtr<void>(GetOwner(), 0);
+
+	// Check for variable in component
+	if(FObjectPropertyBase* ObjectPropertyBase = CastField<FObjectPropertyBase>(PropertyVariable))
+	{
+		UObject* Component = ObjectPropertyBase->GetObjectPropertyValue(Data);
+		if(Component->IsA(UActorComponent::StaticClass()))
+		{
+			PropertyVariable = Component->GetClass()->FindPropertyByName(FName(ChildVar));
+			Data = PropertyVariable->ContainerPtrToValuePtr<void>(Component, 0);
+		}
+	}
+	
 	if(IsPropertyFloat(PropertyVariable))
 	{
 		FNumericProperty* NumericPropertyVariable = CastField<FNumericProperty>(PropertyVariable);
