@@ -67,26 +67,31 @@ void UPowerUpUser::CheckDurations(float DeltaTime)
 	}
 }
 
+void UPowerUpUser::AddPowerUp(TSubclassOf<UPowerUpEffect> PowerUp)
+{
+	UPowerUpEffect* NewPowerUp = NewObject<UPowerUpEffect>(this, PowerUp);
+	if(NewPowerUp == nullptr)
+		return;
+
+	if(NewPowerUp->GetOperation() == EOperation::Product && NewPowerUp->GetModification() == 0.0f)
+	{
+		NewPowerUp->Modification = SMALL_NUMBER;
+	}
+		
+	if(AddProperty(NewPowerUp))
+	{
+		if(NewPowerUp->GetDuration() != 0)
+			PuStack.Push(NewPowerUp);
+
+		NewPowerUp->OnActivate(GetOwner());
+	}
+}
+
 void UPowerUpUser::AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps)
 {
 	for (TSubclassOf<UPowerUpEffect> PowerUp : PowerUps)
 	{
-		UPowerUpEffect* NewPowerUp = NewObject<UPowerUpEffect>(this, PowerUp);
-		if(NewPowerUp == nullptr)
-			continue;
-
-		if(NewPowerUp->GetOperation() == EOperation::Product && NewPowerUp->GetModification() == 0.0f)
-		{
-			NewPowerUp->Modification = SMALL_NUMBER;
-		}
-		
-		if(AddProperty(NewPowerUp))
-		{
-			if(NewPowerUp->GetDuration() != 0)
-				PuStack.Push(NewPowerUp);
-
-			NewPowerUp->OnActivate(GetOwner());
-		}
+		AddPowerUp(PowerUp);
 	}
 }
 

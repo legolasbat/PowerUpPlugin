@@ -27,6 +27,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	void AddPowerUp(TSubclassOf<UPowerUpEffect> PowerUp);
+	
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
 	void AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps);
 
 	UFUNCTION(BlueprintCallable, Category = "PowerUps")
