@@ -95,6 +95,62 @@ void UPowerUpUser::AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps)
 	}
 }
 
+bool UPowerUpUser::HavePowerUp(TSubclassOf<UPowerUpEffect> PowerUp)
+{
+	UPowerUpEffect* NewPowerUp = NewObject<UPowerUpEffect>(this, PowerUp);
+	if(NewPowerUp == nullptr)
+		return false;
+
+	IndexSearch = 0;
+	for (UPowerUpEffect* PU : PuStack)
+	{
+		if(PU->GetName().Equals(NewPowerUp->GetName()))
+		{
+			if(PU->GetModification() == NewPowerUp->GetModification())
+			{
+				if(PU->GetVariable().IsEqual(NewPowerUp->GetVariable()))
+				{
+					return true;
+				}
+			}
+		}
+
+		IndexSearch++;
+	}
+	return false;
+}
+
+UPowerUpEffect* UPowerUpUser::FindPowerUp(TSubclassOf<UPowerUpEffect> PowerUp)
+{
+	if(HavePowerUp(PowerUp))
+	{
+		return PuStack[IndexSearch];
+	}
+
+	return nullptr;
+}
+
+float UPowerUpUser::RemainingTimeForPowerUp(TSubclassOf<UPowerUpEffect> PowerUp)
+{
+	if(HavePowerUp(PowerUp))
+	{
+		return PuStack[IndexSearch]->Duration;
+	}
+
+	return -1.0f;
+}
+
+bool UPowerUpUser::RemovePowerUp(TSubclassOf<UPowerUpEffect> PowerUp)
+{
+	if(HavePowerUp(PowerUp))
+	{
+		PuStack[IndexSearch]->Duration = 0.0f;
+		return true;
+	}
+
+	return false;
+}
+
 void UPowerUpUser::RemoveAllPowerUps()
 {
 	UPowerUpEffect* PowerUpEffect;

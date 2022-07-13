@@ -33,6 +33,18 @@ public:
 	void AddPowerUps(TArray<TSubclassOf<UPowerUpEffect>> PowerUps);
 
 	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	bool HavePowerUp(TSubclassOf<UPowerUpEffect> PowerUp);
+
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	UPowerUpEffect* FindPowerUp(TSubclassOf<UPowerUpEffect> PowerUp);
+
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	float RemainingTimeForPowerUp(TSubclassOf<UPowerUpEffect> PowerUp);
+
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	bool RemovePowerUp(TSubclassOf<UPowerUpEffect> PowerUp);
+	
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
 	void RemoveAllPowerUps();
 	
 private:
@@ -48,4 +60,6 @@ private:
 
 	UPROPERTY()
 	TArray<UPowerUpEffect*> PuStack;
+
+	int IndexSearch = 0;
 };
